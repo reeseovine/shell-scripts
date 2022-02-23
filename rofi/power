@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# small power menu using rofi, i3, systemd and pm-utils
+# (last 3 dependencies are adjustable below)
+# tostiheld, 2016
+# source: https://github.com/tostiheld/dotfiles/blob/master/bin/power-menu.sh
+
+suspend_func () {
+	lock_func
+	systemctl suspend
+}
+lock_func () {
+	/home/reese/scripts/lock
+}
+poweroff_func () {
+	systemctl poweroff
+}
+reboot_func () {
+	systemctl reboot
+}
+logout_func () {
+	i3-msg exit
+}
+export -f suspend_func lock_func poweroff_func reboot_func logout_func
+
+options=$'suspend\nlock\npoweroff\nreboot\nlogout'
+
+# you can customise the rofi command all you want...
+rofi_command="rofi -lines 5"
+
+# ...because the essential options (-dmenu and -p) are added here
+eval "$(echo "$options" | $rofi_command -dmenu -p 'action')_func"

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Display layout menu
+
+mode_laptop () {
+	xrandr --output eDP-1-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-0 --off
+	cleanup
+}
+mode_ultrawide_hdmi () {
+	xrandr --output HDMI-0 --primary --mode 3440x1440 --pos 0x0 --rotate normal --output eDP-1-1 --off
+	cleanup
+}
+
+cleanup () {
+	pywal -a
+	rebar
+}
+
+options=$'laptop\nultrawide_hdmi'
+eval mode_$(echo "$options" | rofi -dmenu -p 'display layout' -lines 2)

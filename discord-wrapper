@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# wrapper for the discord client so that its appearance will always be correct on startup
+
+# auto-updater coming soon? maybe??
+# https://discord.com/api/download/canary?platform=linux&format=deb
+
+# launch discord and capture log
+gtk-launch discord-canary
+
+sleep 6s
+$HOME/scripts/lightswitch -t discord $([[ $(cat $HOME/.cache/wal/light_mode) = 0 ]] && echo '-l')
