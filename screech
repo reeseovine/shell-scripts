@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # easy screenshot tool for both X and Wayland
+# written by Reese Sapphire (github.com/katacarbix)
 # kinda sorta based on swayshot - https://gitlab.com/radio_rogal/swayshot
 
 # Dependencies:

@@ -35,14 +35,20 @@ Pings a Minecraft server to see who is online. Made to be used with Polybar.
 ### mk-itch-shortcut ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
 Creates an application shortcut given an itch.io game folder so you can access it from your app launcher or add it to Steam.
 
-### rebar ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
-(Re)starts polybar. It detects primary and secondary displays and puts the correct bar on each.
-
 ### pywal ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
 Grabs a random wallpaper (or reads a path from `argv`), sets it and loads a color scheme with wal, then tells everything to update its color scheme (either directly or through another script). Supports light and dark mode, and has an automatic option that uses `redshift` to get the angle of the sun.
 
+### rebar ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
+(Re)starts polybar. It detects primary and secondary displays and puts the correct bar on each.
+
 ### rgbctl ![Language: Python3](https://img.shields.io/badge/Language-Python3-357bb3?style=flat)
 Sets the colors of physical devices with RGB in my setup. Right now it only sets the colors of the keyboard on my Razer Blade. It has the ability to set the Yeelight bulbs over my local network but I turned that off because it hurts my eyes 😵.
+
+### screech ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
+Swiss army knife screenshotting tool. It wraps around `maim` (X11) and `grim` (wayland, untested) for taking the screenshots themselves, and a few other small programs for various tasks like selecting an area of the screen. It's designed to have concise and easy-to-remember commands.
+
+### screensaver ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
+Terminal-based desktop screensaver program.
 
 ### startup-apps ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
 Uses i3's `append_layout` feature to restore layouts and open programs upon login so I don't have to waste my time doing it manually.

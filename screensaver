@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
 
+# screensaver utility
+# written by Reese Sapphire (github.com/katacarbix)
+
+# Dependencies:
+#   - kitty-popup (https://github.com/katacarbix/shell-scripts/blob/main/kitty-popup)
+#     - kitty
+#     - i3
+#   - lock (https://github.com/katacarbix/shell-scripts/blob/main/lock)
+#     - i3lock-color
+#   - xidlehook (X11 only) (https://gitlab.com/jD91mZM2/xidlehook)
+#   - some terminal art programs (see my examples below)
+
+# Usage:
+#   screensaver start    - Opens a fullscreen terminal window with a randomly selected term art program.
+#   screensaver stop     - Closes the aforementioned terminal window.
+#   screensaver watch    - Start screensaver, lock, and go to sleep after the computer has been idle for increasing lengths of time.
+
+
 lock_script="/home/reese/scripts/lock"
 term_art=(
 	"pipes-rs"
@@ -20,7 +38,7 @@ case "$1" in
 		kitty @ --to unix:/tmp/kitty-popup_$KITTY_ID close-window
 		;;
 	watch )
-		# The actual screensaver timer, starts after 30min
+		# The screensaver timer, starts after 30min
 		xidlehook --not-when-fullscreen \
 			--socket /tmp/xidlehook0.socket \
 			--timer 1800 \
