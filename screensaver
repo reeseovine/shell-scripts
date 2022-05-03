@@ -18,6 +18,11 @@
 #   screensaver watch    - Start screensaver, lock, and go to sleep after the computer has been idle for increasing lengths of time.
 
 
+# Must be idle for this long before starting
+screensaver_delay=1800
+sleep_delay=3600
+
+
 lock_script="/home/reese/scripts/lock"
 term_art=(
 	"pipes-rs"
@@ -38,17 +43,17 @@ case "$1" in
 		kitty @ --to unix:/tmp/kitty-popup_$KITTY_ID close-window
 		;;
 	watch )
-		# The screensaver timer, starts after 30min
+		# The screensaver timer
 		xidlehook --not-when-fullscreen \
-			--socket /tmp/xidlehook0.socket \
-			--timer 1800 \
+			--socket /tmp/xidlehook_screensaver.socket \
+			--timer $screensaver_delay \
 				"$(readlink -f $0) start" \
-				"$lock_script && $(readlink -f $0) stop" &
+				"$(readlink -f $0) stop && $lock_script" &
 
-		# Sleep timer, starts after 1h
+		# Sleep timer
 		xidlehook --not-when-fullscreen \
-			--socket /tmp/xidlehook1.socket \
-			--timer 3600 \
+			--socket /tmp/xidlehook_sleep.socket \
+			--timer $sleep_delay \
 				"$lock_script && $(readlink -f $0) stop && sudo systemctl suspend" "" &
 		;;
 esac

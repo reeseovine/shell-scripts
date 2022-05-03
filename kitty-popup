@@ -65,7 +65,7 @@ fi
 echo $KITTY_ID
 
 kitty -o allow_remote_control=yes --listen-on unix:/tmp/kitty-popup_$KITTY_ID bash &
-sleep 0.5s
+sleep 1s
 
 if [ $fullscreen == 0 ]; then
 	i3-msg fullscreen enable

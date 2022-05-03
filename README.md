@@ -10,15 +10,11 @@ All of the scripts in this repo were either written by me or borrowed from someo
 *by [beatle on archlinux forums](https://bbs.archlinux.org/viewtopic.php?pid=1037160#p1037160)*  
 Runs in the background and warns me when my laptop battery gets too low.
 
-### colors ![Language: Python3](https://img.shields.io/badge/Language-Python3-357bb3?style=flat)
+### colors.py ![Language: Python3](https://img.shields.io/badge/Language-Python3-357bb3?style=flat)
 Custom visualizations of terminal colors. I'm sure there are better implementations out there but this was fun to make.
 
 ### davsync ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
 Synchronizes calendars and contacts from my CalDAV/CardDAV server with [`vdirsyncer`](https://github.com/pimutils/vdirsyncer) and updates [`khal`](https://github.com/pimutils/khal).
-
-### gcal-repl ![Language: Fish](https://img.shields.io/badge/Language-Fish-d3242b?style=flat)
-**Disclaimer!** I don't use this anymore since I've moved away from Google Calendar. I've kept it here in case you or I want to reuse the code for something similar.  
-A wrapper around [`gcalcli`](https://github.com/insanum/gcalcli) which turns it into a REPL (read-eval-print loop) rather than having to enter the full command every time. This gets wrapped with `kitty-popup` by polybar when I click the date/time widget for easy access.
 
 ### kitty-popup ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
 Create terminal script popup windows using kitty's remote control and i3-msg to manipulate the window.
@@ -35,13 +31,7 @@ Pings a Minecraft server to see who is online. Made to be used with Polybar.
 ### mk-itch-shortcut ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
 Creates an application shortcut given an itch.io game folder so you can access it from your app launcher or add it to Steam.
 
-### pywal ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
-Grabs a random wallpaper (or reads a path from `argv`), sets it and loads a color scheme with wal, then tells everything to update its color scheme (either directly or through another script). Supports light and dark mode, and has an automatic option that uses `redshift` to get the angle of the sun.
-
-### rebar ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
-(Re)starts polybar. It detects primary and secondary displays and puts the correct bar on each.
-
-### rgbctl ![Language: Python3](https://img.shields.io/badge/Language-Python3-357bb3?style=flat)
+### rgbctl.py ![Language: Python3](https://img.shields.io/badge/Language-Python3-357bb3?style=flat)
 Sets the colors of physical devices with RGB in my setup. Right now it only sets the colors of the keyboard on my Razer Blade. It has the ability to set the Yeelight bulbs over my local network but I turned that off because it hurts my eyes 😵.
 
 ### screech ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
@@ -50,11 +40,11 @@ Swiss army knife screenshotting tool. It wraps around `maim` (X11) and `grim` (w
 ### screensaver ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
 Terminal-based desktop screensaver program.
 
-### startup-apps ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
-Uses i3's `append_layout` feature to restore layouts and open programs upon login so I don't have to waste my time doing it manually.
-
 ### update ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)
 Update system-wide packages from different package managers in parallel. Uses `rofi/askpass` when not run from a terminal.
+
+### wal.py ![Language: Python3](https://img.shields.io/badge/Language-Python3-357bb3?style=flat)
+Grabs a random wallpaper (or reads a path from `argv`), sets it and loads a color scheme with wal, then tells everything to update its color scheme (either directly or through [lightswitch](#lightswitch)). Supports light and dark mode, and has an automatic option that uses the angle of the sun.
 
 ## rofi
 Scripts that use rofi as their UI.
@@ -101,3 +91,19 @@ For a while I'd been looking for a simple backup solution for Linux that also fe
 
 ### Shortcomings
 I didn't include the ability to create multiple backups or schedule them, but I don't think it would be hard to add those features. It's also highly tailored to my needs and setup which means you might need to convert some of the code if you use different programs than me.
+
+# Graveyard
+
+Scripts I've stopped using in favor of solutions. Links go to the file at the last commit it existed in.
+
+### [gcal-repl ![Language: Fish](https://img.shields.io/badge/Language-Fish-d3242b?style=flat)](https://github.com/reeseovine/shell-scripts/blob/e3c7d5f07ffd501b990d9756f6776f3c08404e94/gcal-repl)
+A wrapper around [`gcalcli`](https://github.com/insanum/gcalcli) which turns it into a REPL (read-eval-print loop) rather than having to enter the full command every time. This gets wrapped with `kitty-popup` by polybar when I click the date/time widget for easy access.
+
+### [pywal ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)](https://github.com/reeseovine/shell-scripts/blob/e3c7d5f07ffd501b990d9756f6776f3c08404e94/pywal)
+My original bash version of [wal.py](#wal.py-). Grabs a random wallpaper (or reads a path from `argv`), sets it and loads a color scheme with wal, then tells everything to update its color scheme (either directly or through another script). Supports light and dark mode, and has an automatic option that uses `redshift` to get the angle of the sun.
+
+### [rebar ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)](https://github.com/reeseovine/shell-scripts/blob/e3c7d5f07ffd501b990d9756f6776f3c08404e94/rebar)
+(Re)starts polybar. It detects primary and secondary displays and puts the correct bar on each.
+
+### [startup-apps ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)](https://github.com/reeseovine/shell-scripts/blob/e3c7d5f07ffd501b990d9756f6776f3c08404e94/startup-apps)
+Uses i3's `append_layout` feature to restore layouts and open programs upon login so I don't have to waste my time doing it manually.
