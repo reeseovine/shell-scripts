@@ -19,14 +19,15 @@ from PIL import Image
 from PIL import ImageFilter
 
 from colors import draw
-from rgbctl import keeb
+# from rgbctl import keeb
 
 from pywalfox.channel.unix.client import Client
 from pywalfox.config import COMMANDS
 
 
 wallpapers_root = path.Path('/home/reese/Pictures/Wallpapers')
-config_file = path.Path('/home/reese/secrets/location.yml')
+config_file = path.Path('/home/reese/.secrets/location.yml')
+mode_file = path.Path('/home/reese/.cache/wal/light_mode')
 
 ### Find out whether it should use a light or dark theme based on the position of the sun.
 def get_auto_mode():
@@ -37,28 +38,26 @@ def get_auto_mode():
 		return False
 	sun = sunpos(dt=datetime.utcnow(), latitude=config['latitude'], longitude=config['longitude'], elevation=config['elevation'])
 	angle = sun[1]
-	if angle >= 70:
+	if angle < 80:
 		return 'light'
 	return 'dark'
 
-	## Previous version of this function which depends on redshift
-	# sun_data = run(
-	# 	['redshift', '-p'],
-	# 	encoding='utf-8',
-	# 	capture_output=True
-	# ).stdout
-	# period = re.search(r"Period: (.*?)\s", sun_data).group(1)
-	# if period == 'Daytime':
-	# 	return 'light'
-	# return 'dark'
-
 ### Hang until the value returned by get_auto_mode() has changed, checking every `wait` seconds
 def auto_wait(wait):
-	initial = get_auto_mode()
+	initial = None
+	with open(mode_file, 'r') as modefile:
+		initial = ('dark','light')[modefile.read() == 'True']
+	if initial is None:
+		initial = get_auto_mode()
+
 	new = initial
 	while new == initial:
 		sleep(wait)
 		new = get_auto_mode()
+
+	with open(mode_file, 'w') as modefile:
+		modefile.write(str(new == 'light'))
+
 	return new
 
 ### Get aspect ratio of current monitor setup.
@@ -94,24 +93,31 @@ def load_scheme(image, args):
 def update_apps(colors, image, args):
 	pywal.reload.env()
 
+	# change sway wallpaper
+	# run(['swaymsg', 'output', '"*"', 'bg', image, 'fill'])
+
+	# change GNOME wallpaper and appearance
+	# run(['gsettings', 'set', 'org.gnome.desktop.background', 'picture-uri'+('-dark' if args.mode == 'dark' else ''), f'"file://{image}"'])
+	# run(['gsettings', 'set', 'org.gnome.desktop.interface', 'color-scheme', f"'prefer-{args.mode}'"])
+
 	gen_i3lock_bg(image, colors['colors']['color0'])
 
 	# light/dark mode toggle for some applications
-	run(['lightswitch', ('-l' if args.mode == 'light' else '')])
+	run(['lightswitch', ('-l' if args.mode == 'light' else ''), '-t', 'sublime'])
 
 	# (re)start dunst
-	run(['killall', 'dunst'])
-	Popen(['dunst',
-		'-lb', colors['special']['background'],
-		'-lf', colors['special']['foreground'],
-		'-nb', colors['special']['background'],
-		'-nf', colors['special']['foreground'],
-		'-cb', colors['colors']['color5'],
-		'-cf', '#ffffff'
-	])
+	# run(['killall', 'dunst'])
+	# Popen(['dunst',
+	# '-lb', colors['special']['background'],
+	# '-lf', colors['special']['foreground'],
+	# '-nb', colors['special']['background'],
+	# '-nf', colors['special']['foreground'],
+	# '-cb', colors['colors']['color5'],
+	# '-cf', '#ffffff'
+	# ])
 
 	# set laptop keyboard color
-	keeb(list(colors['colors'].values())[1:7])
+	# keeb(list(colors['colors'].values())[1:7])
 
 	# update firefox and thunderbird themes
 	client = Client()
@@ -125,10 +131,10 @@ def update_apps(colors, image, args):
 				client.send_message(COMMANDS['THEME_MODE_LIGHT'])
 
 	# compile discord theme
-	run(['sass', '/home/reese/git/github.com/reeseovine/discord-stuff/themes/bliss/pywal.scss', '/home/reese/git/github.com/reeseovine/discord-stuff/themes/bliss/pywal.css'])
+	# run(['sass', '/home/reese/git/github.com/reeseovine/discord-stuff/themes/bliss/pywal.scss', '/home/reese/git/github.com/reeseovine/discord-stuff/themes/bliss/pywal.css'])
 
 	# trick eww into updating
-	run(['touch', '/home/reese/.config/eww/eww.scss'])
+	path.Path('/home/reese/.config/eww/eww.scss').touch()
 
 
 def main(args):
@@ -153,15 +159,12 @@ def main(args):
 
 	draw('small')
 
-	with open(path.Path('/home/reese/.cache/wal/light_mode'), 'w') as modefile:
-		modefile.write(str(args.mode == 'light'))
-
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Set wallpaper and change color schemes of apps to match.')
 	parser.add_argument('--mode', '-m', choices=['dark','light','auto','auto_loop'], default='auto')
 	parser.add_argument('--backend', '-b', choices=['colorthief','fast_colorthief','colorz','haishoku','schemer2','wal'], default='colorz')
-	parser.add_argument('--saturation', '-s', type=float, default=0.35)
+	parser.add_argument('--saturation', '-s', type=float, default=0.4)
 	parser.add_argument('path', default='', nargs='?')
 	args = parser.parse_args()
 

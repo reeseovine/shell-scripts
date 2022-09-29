@@ -27,7 +27,7 @@ lock_script="/home/reese/scripts/lock"
 term_art=(
 	"pipes-rs"
 	"cbonsai -li -L36 -M6 --seed=\$(date +'%N')"
-	"cmatrix -ark"
+	"cmatrix -as"
 	"asciiquarium"
 )
 
@@ -36,7 +36,7 @@ case "$1" in
 		$(readlink -f $0) stop # just in case it was already running
 		KITTY_ID=$RANDOM
 		echo $KITTY_ID > $HOME/.cache/screensaver-kitty-id
-		KITTY_ID=$KITTY_ID kitty-popup fullscreen -c "${term_art[RANDOM%${#term_art[@]}]}"
+		KITTY_ID=$KITTY_ID kitty-popup fullscreen -c "${term_art[RANDOM%${#term_art[@]}]}; exit"
 		;;
 	stop )
 		read -r KITTY_ID <<< `cat $HOME/.cache/screensaver-kitty-id`

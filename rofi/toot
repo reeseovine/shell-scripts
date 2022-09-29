@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# make mastodon posts (toots) using rofi
+
+### Config ###
+source $HOME/.secrets/rofi_toot # contains INSTANCE, CLIENT_KEY, CLIENT_SECRET, and ACCESS_TOKEN
+##############
+
+status=$(rofi -dmenu -p 'toot' -width 1000 -theme+mainbox+children '[inputbar]')
+[[ -z "$status" ]] && exit 1
+echo $status
+
+spoiler_text=$(rofi -dmenu -p 'CW' -mesg "Add a content warning?" -width 1000 -theme+mainbox+children '[inputbar]')
+echo $spoiler_text
+
+output=$(curl -fs -H "Authorization: Bearer ${ACCESS_TOKEN}" -X POST -F "status=${status}" -F "spoiler_text=${spoiler_text}" "${INSTANCE}/api/v1/statuses")
+echo $output
+
+if [[ "$(echo $output | jq -r '.error')" != "null" ]]; then
+	dunstify "toot.sh" "error: $(echo $output | jq '.error')"
+else
+	action=$(dunstify "toot.sh" "Toot sent!" --action="open,Show toot")
+	[[ "$action" == "open" ]] && xdg-open "$(echo $output | jq -r '.url')"
+fi

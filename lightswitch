@@ -38,7 +38,7 @@ let toggle = {
 	// - Start Discord with the command line argument '--remote-debugging-port=1666'.
 	discord: async mode => {
 		const CDP = require('chrome-remote-interface');
-		CDP({port: 1666}, async (client) => {
+		CDP({host: '127.0.0.1', port: 1666}, async (client) => {
 			await client.Runtime.evaluate({expression: `Lightswitch.set('${mode}')`});
 			client.close();
 			console.log('changed discord appearance');

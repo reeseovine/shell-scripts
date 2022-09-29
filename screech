@@ -30,7 +30,7 @@ shot_name="screech_$(date +'%Y-%m-%d_%H-%M-%S').png"   	# file name to save as
 uploader_base_url="https://i.example.com/"     	# base url of image host for -upload
 uploader_script_path="upload.php"              	# image host upload page
 uploader_key="YOUR_KEY_HERE"                   	# image host api key
-source "$HOME/.screech_secrets"                 # import the actual config values ;)
+source "$HOME/.secrets/screech"                 # import the actual config values ;)
 
 # notification handler
 notify () {

@@ -2,9 +2,9 @@
 
 # generate randomized strings and copy to clipboard
 
-bytes=$(rofi -dmenu -p 'bytes' -lines 0)
+bytes=$(rofi -dmenu -p 'bytes' -theme+mainbox+children '[inputbar]')
 if [ -z "$bytes" ]; then exit; fi
-encoding=$(echo -n $'hex\nbase64' | rofi -dmenu -p 'encoding' -lines 2)
+encoding=$(echo -n $'hex\nbase64' | rofi -dmenu -p 'encoding' -lines 2 -no-fixed-num-lines)
 if [ -z "$encoding" ]; then exit; fi
 
 openssl rand -$encoding $bytes | tr -d '\n' | xclip -selection clipboard

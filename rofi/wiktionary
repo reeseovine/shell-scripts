@@ -30,15 +30,18 @@ POStable = {
 parser = WiktionaryParser()
 parser.set_default_language('english') # Change this to the language you want to use.
 
-def open_rofi(entries, prompt='define'):
-	rofi = Popen(
-		[
+def open_rofi(entries='', prompt='define', mesg=''):
+	cmd = [
 			'rofi',
 			'-dmenu',
 			'-p', prompt,
-			'-width', '1000',
 			'-no-show-icons'
-		],
+		]
+	if len(mesg) > 0:
+		cmd.extend(['-mesg', mesg])
+	print(cmd)
+	rofi = Popen(
+		cmd,
 		stdin=PIPE,
 		stdout=PIPE
 	)
@@ -67,7 +70,7 @@ def lookup(query):
 
 	next = None
 	if len(entries) == 0:
-		(_, next) = open_rofi("No matching entries found.")
+		(_, next) = open_rofi(mesg='No matching entries found.')
 	else:
 		(_, next) = open_rofi("\n".join(entries))
 
@@ -79,7 +82,7 @@ def lookup(query):
 
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
-		(_, query) = open_rofi('Type a word and press Enter.')
+		(_, query) = open_rofi(mesg='Type a word and press Enter.')
 		if len(query) > 0:
 			lookup(query)
 	elif len(sys.argv) > 1:

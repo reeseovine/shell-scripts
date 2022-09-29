@@ -106,4 +106,4 @@ My original bash version of [wal.py](#wal.py-). Grabs a random wallpaper (or rea
 (Re)starts polybar. It detects primary and secondary displays and puts the correct bar on each.
 
 ### [startup-apps ![Language: Bash](https://img.shields.io/badge/Language-Bash-3e474a?style=flat)](https://github.com/reeseovine/shell-scripts/blob/e3c7d5f07ffd501b990d9756f6776f3c08404e94/startup-apps)
-Uses i3's `append_layout` feature to restore layouts and open programs upon login so I don't have to waste my time doing it manually.
+Uses i3's `append_layout` feature to restore layouts and open programs upon login so I don't have to waste my time doing it manually. [Layout files](https://github.com/reeseovine/dotfiles/tree/7d0cb94190865be18b33439af6032cbc68fbfedd/i3/layouts)
